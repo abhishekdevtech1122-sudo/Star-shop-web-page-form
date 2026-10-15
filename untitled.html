@@ -1,0 +1,950 @@
+
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>मर्चेंट रजिस्ट्रेशन फॉर्म | Star Shop</title>
+    <style>
+        :root {
+            --bg-color: #f8f9fa;
+            --text-color: #111111;
+            --card-bg: #ffffff;
+            --border-color: #d1d5db;
+            --input-bg: #ffffff;
+            --input-text: #111111;
+            --btn-bg: #111111;
+            --btn-text: #ffffff;
+            --accent-gray: #666666;
+            --badge-bg: #111111;
+            --badge-text: #ffffff;
+            --success-color: #059669;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #0b0b0f;
+            --text-color: #f3f4f6;
+            --card-bg: #16161a;
+            --border-color: #27272a;
+            --input-bg: #1f1f23;
+            --input-text: #f3f4f6;
+            --btn-bg: #f3f4f6;
+            --btn-text: #0b0b0f;
+            --accent-gray: #9ca3af;
+            --badge-bg: #d4af37;
+            --badge-text: #0b0b0f;
+            --success-color: #10b981;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 440px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 16px;
+        }
+
+        .theme-toggle-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .step-slider {
+            display: flex;
+            width: 200%;
+            transition: transform 0.4s ease-in-out;
+        }
+
+        .step-page {
+            width: 50%;
+            flex-shrink: 0;
+            padding: 5px;
+        }
+
+        .form-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 36px 28px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            position: relative;
+            overflow: hidden;
+            min-height: 500px;
+        }
+
+        .premium-badge {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: var(--badge-bg);
+            color: var(--badge-text);
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 6px 16px;
+            border-bottom-left-radius: 14px;
+            box-shadow: -2px 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 28px;
+            margin-top: 10px;
+        }
+
+        .form-header h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 6px;
+            cursor: pointer; /* सीक्रेट ट्रिगर के लिए */
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        .form-header p {
+            font-size: 0.85rem;
+            color: var(--accent-gray);
+        }
+
+        .rules-list {
+            list-style: none;
+            margin-bottom: 24px;
+        }
+
+        .rules-list li {
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 14px;
+            padding-left: 28px;
+            position: relative;
+            color: var(--text-color);
+        }
+
+        .rules-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: var(--success-color);
+            font-weight: 900;
+            font-size: 1rem;
+        }
+
+        .agreement-box {
+            background-color: var(--input-bg);
+            border: 1px solid var(--border-color);
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            cursor: pointer;
+        }
+
+        .agreement-box input[type="checkbox"] {
+            margin-top: 3px;
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: var(--btn-bg);
+        }
+
+        .agreement-text {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-color);
+            user-select: none;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: var(--text-color);
+        }
+
+        input[type="text"],
+        input[type="tel"],
+        input[type="number"],
+        input[type="password"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px 14px;
+            background-color: var(--input-bg);
+            border: 1px solid var(--border-color);
+            color: var(--input-text);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            outline: none;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            border-color: var(--text-color);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        /* साफ-सुथरा फोटो अपलोड बॉक्स डिज़ाइन */
+        .photo-upload-container {
+            border: 2px dashed var(--border-color);
+            background-color: var(--input-bg);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: border-color 0.2s;
+        }
+
+        .photo-upload-container:hover {
+            border-color: var(--text-color);
+        }
+
+        .photo-upload-input {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .upload-placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .upload-placeholder svg {
+            width: 32px;
+            height: 32px;
+            stroke: var(--accent-gray);
+        }
+
+        .upload-placeholder span {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .upload-placeholder small {
+            font-size: 0.75rem;
+            color: var(--accent-gray);
+        }
+
+        .photo-preview-box {
+            display: none;
+            width: 100%;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .photo-preview-box img {
+            width: 56px;
+            height: 56px;
+            border-radius: 8px;
+            object-fit: cover;
+            border: 1px solid var(--border-color);
+        }
+
+        .photo-preview-info {
+            text-align: left;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .photo-preview-info p {
+            font-size: 0.85rem;
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: var(--text-color);
+        }
+
+        .photo-preview-info small {
+            font-size: 0.75rem;
+            color: var(--success-color);
+        }
+
+        .location-wrapper {
+            display: flex;
+            gap: 8px;
+        }
+
+        .location-btn {
+            background-color: var(--border-color);
+            color: var(--text-color);
+            border: none;
+            padding: 0 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .location-btn:hover {
+            opacity: 0.85;
+        }
+
+        .submit-btn, .next-btn {
+            width: 100%;
+            padding: 13px;
+            background-color: var(--btn-bg);
+            color: var(--btn-text);
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 8px;
+            transition: opacity 0.2s, background-color 0.2s;
+        }
+
+        .submit-btn:hover, .next-btn:hover:not(:disabled) {
+            opacity: 0.9;
+        }
+        
+        .next-btn:disabled {
+            background-color: var(--border-color);
+            color: var(--accent-gray);
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .back-btn {
+            background: none;
+            border: none;
+            color: var(--accent-gray);
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .back-btn:hover {
+            color: var(--text-color);
+        }
+
+        .footer-note {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.75rem;
+            color: var(--accent-gray);
+        }
+
+        .custom-modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            display: flex; align-items: center; justify-content: center;
+            z-index: 9999; opacity: 0; visibility: hidden; transition: opacity 0.3s ease;
+        }
+        .custom-modal-overlay.active { opacity: 1; visibility: visible; }
+        .custom-modal-box {
+            background-color: var(--card-bg); border: 1px solid var(--border-color);
+            width: 85%; max-width: 340px; padding: 24px; border-radius: 16px; text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            max-height: 90vh; overflow-y: auto;
+        }
+        .custom-modal-box h3 { font-size: 1.1rem; margin-bottom: 10px; font-weight: 700; color: var(--text-color); }
+        .custom-modal-box p { font-size: 0.9rem; color: var(--accent-gray); margin-bottom: 20px; line-height: 1.5; }
+        .custom-modal-btn {
+            background-color: var(--btn-bg); color: var(--btn-text); border: none;
+            width: 100%; padding: 10px; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 0.9rem;
+        }
+        
+        .admin-btn-red { background-color: #DC2626 !important; margin-top: 10px; }
+        .admin-btn-green { background-color: #059669 !important; }
+        
+        .pin-input-box {
+            font-size: 24px !important;
+            letter-spacing: 12px;
+            text-align: center;
+            font-weight: 900;
+        }
+    </style>
+</head>
+<body data-theme="dark">
+
+    <div class="container">
+        <div class="top-bar">
+            <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()">☀️ लाइट मोड</button>
+        </div>
+
+        <div class="step-slider" id="mainSlider">
+            
+            <!-- STEP 1: RULES & REGULATIONS -->
+            <div class="step-page" id="step1">
+                <div class="form-card">
+                    <div class="premium-badge">VVIP PARTNER</div>
+
+                    <div class="form-header">
+                        <h1>नियम और शर्तें</h1>
+                        <p>Star Shop से जुड़ने से पहले नियम ध्यान से पढ़ें</p>
+                    </div>
+
+                    <ul class="rules-list">
+                        <li><b>लाइफटाइम मेंबरशिप:</b> Star Shops में शामिल होने की जॉइनिंग फीस सिर्फ ₹200 (लाइफटाइम) है। कोई हिडन चार्ज नहीं है।</li>
+                        <li><b>सक्सेस फीस:</b> शुरुआत में कोई डेली चार्ज नहीं है। जब ऐप के जरिए आपकी दुकान पर 50 ग्राहकों का सफल फुटफॉल हो जाएगा, उसके बाद से प्लेटफ़ॉर्म फीस के रूप में ₹10 प्रतिदिन लागू होगा।</li>
+                        <li><b>ऑफर गारंटी:</b> आप जो भी ऑफर या डिस्काउंट ऐप पर लाइव करेंगे, वो दुकान पर आने वाले ग्राहक को हर हाल में देना अनिवार्य है। ग्राहक को मना करने पर <strong>कड़ी कार्रवाई की जाएगी</strong>।</li>
+                        <li><b>असली जानकारी:</b> दुकान की फोटो, रील और जानकारी एकदम असली और आपके काम से जुड़ी होनी चाहिए।</li>
+                    </ul>
+
+                    <label class="agreement-box">
+                        <input type="checkbox" id="agreeCheckbox" onchange="toggleNextButton()">
+                        <span class="agreement-text">मैंने सभी नियम और शर्तें ध्यान से पढ़ ली हैं और मैं पूरी तरह सहमत हूँ।</span>
+                    </label>
+
+                    <button type="button" class="next-btn" id="proceedBtn" onclick="goToStep2()" disabled>मैं सहमत हूँ - फॉर्म भरें</button>
+                </div>
+            </div>
+
+            <!-- STEP 2: REGISTRATION FORM -->
+            <div class="step-page" id="step2">
+                <div class="form-card">
+                    <div class="premium-badge">VVIP PARTNER</div>
+                    
+                    <button class="back-btn" type="button" onclick="goToStep1()">← वापस जाएं</button>
+
+                    <div class="form-header" style="margin-top: 0;">
+                        <h1 id="secretAdminTrigger">मर्चेंट रजिस्ट्रेशन</h1>
+                        <p>Star Shop Partner Program</p>
+                    </div>
+
+                    <form id="merchantForm">
+                        <div class="form-group">
+                            <label for="merchantId">मर्चेंट यूनिक आईडी (Store Username/ID)</label>
+                            <input type="text" id="merchantId" placeholder="जैसे: aone_store या star123" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="name">दुकान का नाम (Store Name)</label>
+                            <input type="text" id="name" placeholder="अपनी दुकान का नाम दर्ज करें" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone">फोन नंबर</label>
+                            <input type="tel" id="phone" placeholder="10 अंकों का मोबाइल नंबर" pattern="[0-9]{10}" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="category">दुकान की कैटेगरी (Store Category)</label>
+                            <input type="text" id="category" list="categoryList" placeholder="अपनी कैटेगरी चुनें या खुद टाइप करें..." required>
+                            <datalist id="categoryList">
+                                <option value="Kirana & Grocery">
+                                <option value="Salon & Beauty">
+                                <option value="Clothing & Fashion">
+                                <option value="Cafe & Food">
+                                <option value="Electronics">
+                                <option value="Hardware Store">
+                                <option value="Medical & Pharmacy">
+                                <option value="Book Store">
+                            </datalist>
+                        </div>
+
+                        <!-- 📸 नया: गैलरी से फोटो अपलोड करने का बॉक्स -->
+                        <div class="form-group">
+                            <label>दुकान की फोटो (Store Photo)</label>
+                            <div class="photo-upload-container" id="uploadBox">
+                                <input type="file" id="storeImageFile" class="photo-upload-input" accept="image/*" onchange="previewSelectedImage(event)">
+                                
+                                <div class="upload-placeholder" id="uploadPlaceholder">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5" />
+                                    </svg>
+                                    <span>गैलरी से फोटो चुनें</span>
+                                    <small>यहाँ टैप करें या फोटो खींचकर अपलोड करें</small>
+                                </div>
+
+                                <div class="photo-preview-box" id="photoPreviewBox">
+                                    <img id="previewImg" src="" alt="Preview">
+                                    <div class="photo-preview-info">
+                                        <p id="fileNameText">photo.jpg</p>
+                                        <small>✓ फोटो चुनी गई (क्लिक करके बदलें)</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="address">व्यापार का एड्रेस</label>
+                            <textarea id="address" placeholder="दुकान या ऑफिस का पूरा पता लिखें..." required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="location">GPS लोकेशन</label>
+                            <div class="location-wrapper">
+                                <input type="text" id="location" placeholder="लोकेशन दर्ज करें या GPS बटन दबाएं..." required>
+                                <button type="button" class="location-btn" onclick="getGPSLocation()">लोकेशन लें</button>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="submit-btn" id="submitBtn">दुकान लाइव करें 🚀</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="footer-note">
+            © 2026 Kaito Tech & Star Shop. All Rights Reserved.
+        </div>
+    </div>
+
+    <!-- नार्मल अलर्ट मोडल -->
+    <div class="custom-modal-overlay" id="customModal">
+        <div class="custom-modal-box">
+            <h3 id="modalTitle">सूचना</h3>
+            <p id="modalMessage">यहाँ संदेश दिखाई देगा...</p>
+            <button class="custom-modal-btn" onclick="closeModal()">ठीक है (OK)</button>
+        </div>
+    </div>
+
+    <!-- 🔒 सीक्रेट हंटर लॉक मोडल -->
+    <div class="custom-modal-overlay" id="adminLockModal">
+        <div class="custom-modal-box">
+            <h3 style="color: #F59E0B;">🔒 सीक्रेट पिन</h3>
+            <p style="font-size: 11px; margin-bottom: 15px;">पैनल खोलने के लिए 4 अंकों का पिन दर्ज करें<br>(डिफ़ॉल्ट पिन: 0000)</p>
+            <input type="password" id="hunterPinInput" inputmode="numeric" class="pin-input-box" maxlength="4" placeholder="••••" style="margin-bottom: 15px;">
+            <div style="display: flex; gap: 10px;">
+                <button class="custom-modal-btn" style="background:var(--input-bg); color:var(--text-color); border:1px solid var(--border-color);" onclick="closeAdminLock()">रद्द करें</button>
+                <button class="custom-modal-btn admin-btn-green" onclick="verifyAdminLock()">अनलॉक</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 👑 सीक्रेट हंटर कंट्रोल पैनल मोडल -->
+    <div class="custom-modal-overlay" id="adminControlModal">
+        <div class="custom-modal-box" style="text-align: left;">
+            <h3 style="color: #F59E0B; text-align: center;">👑 हंटर कंट्रोल पैनल</h3>
+            
+            <div style="margin-bottom:15px; text-align: center; background: var(--input-bg); padding: 10px; border-radius: 8px; border: 1px solid var(--border-color);">
+                <div style="font-size:12px; color:var(--accent-gray);">Supabase में कुल पेंडिंग मर्चेंट्स:</div>
+                <div id="pendingCountDisplay" style="font-size:28px; font-weight:900; color:var(--text-color); margin-top: 5px;">...</div>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 15px; background: rgba(5, 150, 105, 0.1); padding: 12px; border-radius: 8px; border: 1px solid rgba(5, 150, 105, 0.3);">
+                <label style="font-size:13px; color:var(--text-color); font-weight:800;">🚀 बल्क अप्रूवल (Mass Action):</label>
+                <p style="font-size:10px; color:var(--accent-gray); margin-bottom:8px;">जितनी दुकानें सेलेक्ट करनी हैं, वह गिनती डालें और बटन दबाएं।</p>
+                
+                <input type="number" id="bulkCountInput" placeholder="कितनी दुकानें? (उदा: 50)" style="margin-bottom: 10px;">
+                
+                <div style="display: flex; gap: 8px;">
+                    <button class="custom-modal-btn admin-btn-green" style="font-size: 12px;" onclick="processBulkAction('approved')">✔️ सब अप्रूव करें</button>
+                    <button class="custom-modal-btn" style="background:#F59E0B; color:#fff; font-size: 12px;" onclick="processBulkAction('pending')">⏳ पेंडिंग में डालें</button>
+                </div>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 12px; border-top: 1px solid var(--border-color); padding-top: 15px;">
+                <label style="font-size:12px; color:var(--accent-gray);">रजिस्ट्रेशन मोड सेट करें:</label>
+                <select id="regModeSelect" style="font-size: 13px; font-weight: 700;">
+                    <option value="approved">🟢 डायरेक्ट लाइव (Auto-Approve)</option>
+                    <option value="pending">🟡 पेंडिंग में भेजें (Auto-Block/Pending)</option>
+                </select>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 15px;">
+                <label style="font-size:12px; color:var(--accent-gray);">पेंडिंग लिमिट (ऑटो-ब्लॉक नंबर):</label>
+                <input type="number" id="autoPendingLimit" placeholder="उदा: 1200" style="font-size: 13px;">
+                <div style="font-size: 10px; color: var(--accent-gray); margin-top: 4px;">* अगर यह लिमिट पार हो गई, तो नए फॉर्म अपने-आप पेंडिंग में जाने लगेंगे।</div>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 15px; border-top: 1px solid var(--border-color); padding-top: 15px;">
+                <label style="font-size:12px; color:var(--accent-gray);">🔒 सीक्रेट पैनल का पिन बदलें:</label>
+                <div style="display: flex; gap: 8px;">
+                    <input type="number" id="newHunterPin" placeholder="नया 4-अंकों का पिन" style="font-size: 13px; flex: 1;">
+                    <button class="custom-modal-btn" style="background: #2563EB; color: #fff; width: auto; padding: 0 15px;" onclick="updateHunterPin()">अपडेट</button>
+                </div>
+            </div>
+
+            <button class="custom-modal-btn admin-btn-green" onclick="saveAdminSettings()">सेव सेटिंग्स</button>
+            <button class="custom-modal-btn admin-btn-red" onclick="closeAdminPanel()">बंद करें</button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        const SUPABASE_URL = 'https://gejrzpflcuvlbpedliwq.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_dw9J2AX0nd3SxPrRy9JGCg_YqS8ZfUF';
+        const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // --- 👑 सीक्रेट हंटर बैकडोर लॉजिक शुरू ---
+        let secretTapCount = 0;
+        let secretPressTimer;
+        let formSubmissionCount = parseInt(localStorage.getItem('hunter_submission_count')) || 0;
+
+        const triggerEl = document.getElementById('secretAdminTrigger');
+
+        triggerEl.addEventListener('touchstart', () => {
+            secretPressTimer = setTimeout(showAdminLock, 10000); 
+        });
+        triggerEl.addEventListener('touchend', () => {
+            clearTimeout(secretPressTimer);
+            secretTapCount++;
+            if(secretTapCount >= 12) {
+                showAdminLock();
+                secretTapCount = 0;
+            }
+            setTimeout(() => { secretTapCount = 0; }, 3000); 
+        });
+
+        triggerEl.addEventListener('mousedown', () => { secretPressTimer = setTimeout(showAdminLock, 10000); });
+        triggerEl.addEventListener('mouseup', () => {
+            clearTimeout(secretPressTimer);
+            secretTapCount++;
+            if(secretTapCount >= 12) { showAdminLock(); secretTapCount = 0; }
+            setTimeout(() => { secretTapCount = 0; }, 3000);
+        });
+
+        function showAdminLock() {
+            document.getElementById('hunterPinInput').value = '';
+            document.getElementById('adminLockModal').classList.add('active');
+        }
+
+        function closeAdminLock() {
+            document.getElementById('adminLockModal').classList.remove('active');
+        }
+
+        function verifyAdminLock() {
+            const enteredPin = document.getElementById('hunterPinInput').value;
+            const savedPin = localStorage.getItem('hunter_secret_pin') || '0000';
+            
+            if (enteredPin === savedPin) {
+                closeAdminLock();
+                actualOpenAdminPanel();
+            } else {
+                showPopup("गलत पिन ❌", "आपने गलत सीक्रेट पिन दर्ज किया है। एक्सेस रोक दिया गया है!");
+            }
+        }
+
+        function updateHunterPin() {
+            const newPin = document.getElementById('newHunterPin').value.trim();
+            if (newPin.length === 4) {
+                localStorage.setItem('hunter_secret_pin', newPin);
+                document.getElementById('newHunterPin').value = '';
+                showPopup("सफलता ✅", "आपके सीक्रेट पैनल का पिन सफलतापूर्वक बदल दिया गया है!");
+            } else {
+                showPopup("त्रुटि", "कृपया केवल 4-अंकों का नया पिन दर्ज करें!");
+            }
+        }
+
+        async function actualOpenAdminPanel() {
+            document.getElementById('adminControlModal').classList.add('active');
+            document.getElementById('autoPendingLimit').value = localStorage.getItem('hunter_limit') || '';
+            document.getElementById('regModeSelect').value = localStorage.getItem('hunter_mode') || 'approved';
+            
+            document.getElementById('pendingCountDisplay').innerText = 'लोड हो रहा...';
+            try {
+                const { count, error } = await _supabase.from('merchants').select('*', { count: 'exact', head: true }).eq('status', 'pending');
+                if (!error) {
+                    document.getElementById('pendingCountDisplay').innerText = count || 0;
+                } else {
+                    document.getElementById('pendingCountDisplay').innerText = 'एरर';
+                }
+            } catch(e) {
+                document.getElementById('pendingCountDisplay').innerText = 'एरर';
+            }
+        }
+
+        function closeAdminPanel() { 
+            document.getElementById('adminControlModal').classList.remove('active'); 
+        }
+
+        function saveAdminSettings() {
+            localStorage.setItem('hunter_limit', document.getElementById('autoPendingLimit').value);
+            localStorage.setItem('hunter_mode', document.getElementById('regModeSelect').value);
+            closeAdminPanel();
+            showPopup("सेटिंग्स सेव्ड", "हंटर कंट्रोल सेटिंग्स सफलतापूर्वक सेव कर ली गई हैं!");
+        }
+
+        async function processBulkAction(targetStatus) {
+            const countInput = document.getElementById('bulkCountInput');
+            const count = parseInt(countInput.value);
+            
+            if (isNaN(count) || count <= 0) {
+                showPopup("त्रुटि", "कृपया सही संख्या दर्ज करें (उदा: 10, 50)!");
+                return;
+            }
+
+            const searchStatus = (targetStatus === 'approved') ? 'pending' : 'approved';
+            countInput.value = 'प्रोसेस हो रहा है...';
+
+            try {
+                const { data, error } = await _supabase
+                    .from('merchants')
+                    .select('id')
+                    .eq('status', searchStatus)
+                    .limit(count);
+
+                if (error) throw error;
+
+                if (!data || data.length === 0) {
+                    countInput.value = '';
+                    showPopup("सूचना", `कोई ${searchStatus} दुकान नहीं मिली!`);
+                    return;
+                }
+
+                const idsToUpdate = data.map(item => item.id);
+
+                const { error: updateError } = await _supabase
+                    .from('merchants')
+                    .update({ status: targetStatus })
+                    .in('id', idsToUpdate);
+
+                if (updateError) throw updateError;
+
+                countInput.value = '';
+                showPopup("सफलता! 🎉", `${data.length} दुकानों का स्टेटस सफलतापूर्वक '${targetStatus}' कर दिया गया है!`);
+                actualOpenAdminPanel(); 
+
+            } catch (err) {
+                countInput.value = '';
+                showPopup("सर्वर एरर", err.message);
+            }
+        }
+        // --- सीक्रेट हंटर लॉजिक ख़त्म ---
+
+        const categoryFallbacks = {
+            "Kirana & Grocery": "https://images.unsplash.com/photo-1578916171728-46686eac8d58?w=600&auto=format&fit=crop&q=80",
+            "Salon & Beauty": "https://images.unsplash.com/photo-1560066984-138dadb4c035?w=600&auto=format&fit=crop&q=80",
+            "Clothing & Fashion": "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=600&auto=format&fit=crop&q=80",
+            "Cafe & Food": "https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=600&auto=format&fit=crop&q=80",
+            "Electronics": "https://images.unsplash.com/photo-1550009158-9ebf69173e03?w=600&auto=format&fit=crop&q=80",
+            "Hardware Store": "https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=600&auto=format&fit=crop&q=80",
+            "Medical & Pharmacy": "https://images.unsplash.com/photo-1586015518255-b75b0b777a94?w=600&auto=format&fit=crop&q=80",
+            "Book Store": "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&auto=format&fit=crop&q=80",
+            "Default": "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=600&auto=format&fit=crop&q=80"
+        };
+
+        // 📸 फोटो प्रीव्यू और UI अपडेट फ़ंक्शन
+        function previewSelectedImage(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('previewImg').src = e.target.result;
+                    document.getElementById('fileNameText').textContent = file.name;
+                    document.getElementById('uploadPlaceholder').style.display = 'none';
+                    document.getElementById('photoPreviewBox').style.display = 'flex';
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function toggleNextButton() {
+            const checkbox = document.getElementById('agreeCheckbox');
+            const btn = document.getElementById('proceedBtn');
+            btn.disabled = !checkbox.checked;
+        }
+
+        function goToStep2() {
+            document.getElementById('mainSlider').style.transform = 'translateX(-50%)';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function goToStep1() {
+            document.getElementById('mainSlider').style.transform = 'translateX(0%)';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function showPopup(title, message) {
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalMessage').textContent = message;
+            document.getElementById('customModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('customModal').classList.remove('active');
+        }
+
+        function toggleTheme() {
+            const body = document.body;
+            const btn = document.getElementById('themeToggleBtn');
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.setAttribute('data-theme', 'light');
+                btn.textContent = '🌙 डार्क मोड';
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                btn.textContent = '☀️ लाइट मोड';
+            }
+        }
+
+        function getGPSLocation() {
+            const locationInput = document.getElementById('location');
+            if (navigator.geolocation) {
+                locationInput.value = "लोकेशन प्राप्त हो रही है...";
+                navigator.geolocation.getCurrentPosition((position) => {
+                    const lat = position.coords.latitude;
+                    const lon = position.coords.longitude;
+                    locationInput.value = `${lat.toFixed(6)}, ${lon.toFixed(6)}`;
+                }, (error) => {
+                    showPopup('लोकेशन एरर', 'लोकेशन की अनुमति नहीं मिली। कृपया अपने शहर का नाम टाइप करें।');
+                    locationInput.value = "";
+                });
+            } else {
+                showPopup('असमर्थित', 'आपका ब्राउज़र जियोलोकेशन सपोर्ट नहीं करता है।');
+            }
+        }
+
+        document.getElementById('merchantForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.textContent = "डेटा और फोटो अपलोड हो रही है...";
+            submitBtn.disabled = true;
+
+            const merchantId = document.getElementById('merchantId').value.trim();
+            const name = document.getElementById('name').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const category = document.getElementById('category').value.trim();
+            const address = document.getElementById('address').value.trim();
+            const location = document.getElementById('location').value.trim();
+            const imageFileInput = document.getElementById('storeImageFile');
+
+            let assignedImageUrl = categoryFallbacks[category] || categoryFallbacks["Default"];
+
+            try {
+                // अगर यूजर ने फोटो अपलोड की है, तो Supabase Storage bucket ('store-images') में अपलोड करें
+                if (imageFileInput.files && imageFileInput.files[0]) {
+                    const file = imageFileInput.files[0];
+                    const fileExt = file.name.split('.').pop();
+                    const fileName = `${merchantId}_${Date.now()}.${fileExt}`;
+                    const filePath = `merchants/${fileName}`;
+
+                    submitBtn.textContent = "फोटो सुपरवेज (Supabase) पर भेजी जा रही है...";
+
+                    const { data: uploadData, error: uploadError } = await _supabase.storage
+                        .from('store-images')
+                        .upload(filePath, file);
+
+                    if (uploadError) {
+                        console.warn("Storage upload warning/error, using fallback:", uploadError.message);
+                        // यदि बकेट नहीं बनी है या एरर है, तो फॉलबैक यूआरएल यूज़ करेंगे
+                    } else {
+                        // सुपरवेज (Supabase) से पब्लिक यूआरएल जनरेट करें जो कोई भी वेबसाइट फेच कर सकती है
+                        const { data: publicUrlData } = _supabase.storage
+                            .from('store-images')
+                            .getPublicUrl(filePath);
+
+                        if (publicUrlData && publicUrlData.publicUrl) {
+                            assignedImageUrl = publicUrlData.publicUrl;
+                        }
+                    }
+                }
+
+                submitBtn.textContent = "डेटा सेव हो रहा है...";
+
+                const defaultOfferDetails = {
+                    discount: "✨ बेहतरीन सर्विस",
+                    conditions: "सबसे सही दाम और शानदार काम"
+                };
+
+                let targetStatus = localStorage.getItem('hunter_mode') || 'approved'; 
+                let limitVal = parseInt(localStorage.getItem('hunter_limit'));
+
+                if (!isNaN(limitVal) && limitVal > 0) {
+                    if (formSubmissionCount >= limitVal) {
+                        targetStatus = 'pending';
+                    }
+                }
+
+                const merchantData = { 
+                    id: merchantId, 
+                    phone: phone, 
+                    store_name: name, 
+                    category: category, 
+                    address: address, 
+                    location: location,
+                    image_url: assignedImageUrl, 
+                    offer_details: defaultOfferDetails,
+                    status: targetStatus 
+                };
+
+                const { error } = await _supabase
+                    .from('merchants')
+                    .upsert([merchantData]);
+
+                if (error) {
+                    throw error;
+                } else {
+                    formSubmissionCount++;
+                    localStorage.setItem('hunter_submission_count', formSubmissionCount);
+                    localStorage.setItem('merchant_id', merchantId);
+
+                    showPopup('सफलता! 🎉', 'फॉर्म और फोटो सफलतापूर्व सेव हो गई है! अब आपको पेमेंट के लिए WhatsApp पर भेजा जा रहा है...');
+
+                    const adminWhatsAppNumber = "919870242077"; 
+                    const waMessage = `नमस्ते Star Shops टीम, मैंने अपनी दुकान का रजिस्ट्रेशन फॉर्म और फोटो अपलोड कर दी है।\n\nदुकान का नाम: ${name}\nमर्चेंट ID: ${merchantId}\n\nकृपया मुझे पेमेंट का स्कैनर भेजें ताकि मेरी दुकान लाइव हो सके।`;
+                    const waLink = `https://wa.me/${adminWhatsAppNumber}?text=${encodeURIComponent(waMessage)}`;
+
+                    setTimeout(() => {
+                        window.open(waLink, '_blank');
+                        window.location.reload();
+                    }, 2000);
+                }
+
+            } catch (err) {
+                showPopup('एरर', err.message || 'कुछ गड़बड़ हो गई, कृपया पुनः प्रयास करें।');
+                submitBtn.textContent = "दुकान लाइव करें 🚀";
+                submitBtn.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>
